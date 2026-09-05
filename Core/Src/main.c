@@ -18,11 +18,13 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "output.h"
+#include "rs232.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,10 +88,12 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   output_init();
+  rs232_init(9600);
   /* USER CODE END 2 */
-  
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -99,6 +103,7 @@ int main(void)
     HAL_Delay(1000);
     output_low();
     HAL_Delay(500);
+    rs232_send_string("Hola Mundo\r\n");
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
