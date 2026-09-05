@@ -1,0 +1,32 @@
+# Ignorar carpeta de compilación
+build/
+
+# Archivos generados por CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+*.cmake
+
+# Archivos de salida binarios
+*.elf
+*.bin
+*.hex
+*.map
+
+# Archivos de depuración
+*.d
+*.o
+*.lst
+
+# Archivos de configuración de IDE
+*.launch
+*.settings/
+*.project
+*.cproject
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Archivos de usuario de STM32CubeMX
+*.mxproject
