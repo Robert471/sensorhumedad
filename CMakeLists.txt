@@ -47,6 +47,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     lib/src/output.c 
     lib/src/rs232.c
+    lib/src/dht11.c
 )
 
 # Add include paths

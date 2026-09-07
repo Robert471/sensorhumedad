@@ -25,11 +25,14 @@
 /* USER CODE BEGIN Includes */
 #include "output.h"
 #include "rs232.h"
+#include "dht11.h"
+#include "string.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+extern uint8_t temperatura, humedad;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -67,7 +70,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
+  char strtemperatura[15];
+	char strhumedad[15];
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -96,14 +100,35 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  // HABILITANDO EL CLOCK DEL TIM3
+  
+	RCC->APB1ENR |= (1 << 1);	//1: TIM3 clock enabled
+	TIM3->PSC =  84 - 1;
+	TIM3->ARR =  65535 - 1;
+	//	CONTADOR MODO ASCENDENTE
+	TIM3->CR1 &= ~(1 << 4);	//	0: Counter used as upcounter
+	//	HABILITAMOS LA INTERRUPCION EN EL PERIFERICO
+	TIM3->DIER |= (1 << 0);	//	1: Update interrupt enabled
+	//	HABILITANDO LA INTERRUPCION EN EL NVIC
+	//NVIC_EnableIRQ( TIM3_IRQn );
+	TIM3->CNT = 0;
+	// CONTADOR HABILITADO
+	TIM3->CR1 |= (1 << 0);	//	1: Counter enabled
+
   while (1)
   {
-    ///HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    output_high();
-    HAL_Delay(1000);
-    output_low();
-    HAL_Delay(500);
-    rs232_send_string("Hola Mundo\r\n");
+    
+    if( dht11_read() == 0 )
+	  {
+		  sprintf(strhumedad, "humd: %u \r\n", humedad);
+		  sprintf(strtemperatura, "temp: %u \r\n", temperatura);
+      rs232_send_string(strhumedad);
+      rs232_send_string(strtemperatura);
+	  }
+    rs232_send_string("blinking\r\n");
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+	  HAL_Delay(1500);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
