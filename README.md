@@ -1,15 +1,19 @@
 # Proyecto STM32 - Lectura de DHT11
 
 Este proyecto implementa la lectura de un sensor **DHT11** (temperatura y humedad) utilizando un microcontrolador **STM32F411RT6**.  
-Los datos se envían por **UART (RS232)** y se muestra un parpadeo en el LED integrado como indicador de ejecución.
+Los valores obtenidos se visualizan en una **pantalla LCD** y, adicionalmente, se transmiten mediante **UART (RS232)**.  
+Como indicador de ejecución, el sistema activa un parpadeo en el **LED integrado** de la placa.
+
 
 ## Estructura del proyecto
 
-- `main.c` → Código principal de inicialización y bucle infinito.
-- `dht11.c / dht11.h` → Librería para la comunicación con el sensor DHT11.
-- `rs232.c / rs232.h` → Funciones para transmisión serial.
-- `output.c / output.h` → Funciones auxiliares de salida.
-- `usart.c / gpio.c` → Inicialización de periféricos generada por CubeMX.
+- [main.c](./main.c) → Código principal de inicialización y bucle infinito.
+- [dht11.c](./dht11.c) / [dht11.h](./dht11.h) → Librería para la comunicación con el sensor DHT11.
+- [rs232.c](./rs232.c) / [rs232.h](./rs232.h) → Funciones para transmisión serial.
+- [output.c](./output.c) / [output.h](./output.h) → Funciones auxiliares de salida.
+- [usart.c](./usart.c) / [gpio.c](./gpio.c) → Inicialización de periféricos generada por CubeMX.
+- [lcd.c](./lcd.c) / [lcd.c](./lcd.c) → Inicialización de lcd.
+
 
 ## Configuración del hardware
 
@@ -17,6 +21,7 @@ Los datos se envían por **UART (RS232)** y se muestra un parpadeo en el LED int
 - **Sensor:** DHT11 conectado aL PIN C3 configurado como entrada/salida.
 - **UART:** USART2 a 9600 baudios.
 - **LED:** Pin PA5.
+- **LCD:** LCD Shield.
 
 ## Flujo del programa
 
@@ -25,6 +30,7 @@ Los datos se envían por **UART (RS232)** y se muestra un parpadeo en el LED int
 3. En el bucle principal:
    - Se ejecuta `dht11_read()`.
    - Si la lectura es correcta:
+     - Se muestra en la LCD humedad y temperatura.
      - Se envía por UART la humedad y temperatura.
    - Se envía un mensaje de estado `"blinking"`.
    - Se alterna el LED en PA5 cada 1.5 segundos.
@@ -37,11 +43,13 @@ blinking
 
 ## Dependencias
 
-- **HAL STM32CubeMX** para inicialización de periféricos.
+- **HAL STM32CubeMX** → Inicialización de periféricos.
 - Librerías personalizadas:
-  - `dht11.h`
-  - `rs232.h`
-  - `output.h`
+  - [dht11.h](./dht11.h)
+  - [rs232.h](./rs232.h)
+  - [output.h](./output.h)
+  - [lcd.h](./lcd.h)
+
 
 ## Compilación y carga
 
