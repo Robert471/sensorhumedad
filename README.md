@@ -8,12 +8,11 @@ Como indicador de ejecución, el sistema activa un parpadeo en el **LED integrad
 ## Estructura del proyecto
 
 - [main.c](./main.c) → Código principal de inicialización y bucle infinito.
-- [dht11.c](./dht11.c) / [dht11.h](./dht11.h) → Librería para la comunicación con el sensor DHT11.
-- [rs232.c](./rs232.c) / [rs232.h](./rs232.h) → Funciones para transmisión serial.
-- [output.c](./output.c) / [output.h](./output.h) → Funciones auxiliares de salida.
-- [usart.c](./usart.c) / [gpio.c](./gpio.c) → Inicialización de periféricos generada por CubeMX.
-- [lcd.c](./lcd.c) / [lcd.c](./lcd.c) → Inicialización de lcd.
-
+- [dht11.c](./lib/src/dht11.c) / [dht11.h](./lib/inc/dht11.h) → Librería para la comunicación con el sensor DHT11.
+- [rs232.c](./lib/src/rs232.c) / [rs232.h](./lib/inc/rs232.h) → Funciones para transmisión serial.
+- [output.c](./lib/src/output.c) / [output.h](./lib/inc/output.h) → Funciones auxiliares de salida.
+- [usart.c](./lib/src/usart.c) / [gpio.c](./lib/src/gpio.c) → Inicialización de periféricos generada por CubeMX.
+- [lcd.c](./lib/src/lcd.c) / [lcd.h](./lib/inc/lcd.h) → Control e inicialización de la pantalla LCD.
 
 ## Configuración del hardware
 
@@ -45,11 +44,10 @@ blinking
 
 - **HAL STM32CubeMX** → Inicialización de periféricos.
 - Librerías personalizadas:
-  - [dht11.h](./dht11.h)
-  - [rs232.h](./rs232.h)
-  - [output.h](./output.h)
-  - [lcd.h](./lcd.h)
-
+  - [dht11.h](./lib/inc/dht11.h) / [dht11.c](./lib/src/dht11.c)
+  - [rs232.h](./lib/inc/rs232.h) / [rs232.c](./lib/src/rs232.c)
+  - [output.h](./lib/inc/output.h) / [output.c](./lib/src/output.c)
+  - [lcd.h](./lib/inc/lcd.h) / [lcd.c](./lib/src/lcd.c)
 
 ## Compilación y carga
 
@@ -66,7 +64,7 @@ blinking
 
 ---
 
-Autor: Robert  
+Autor: ROMOBOA 
 Fecha: Septiembre 2026
 
 
