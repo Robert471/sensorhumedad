@@ -136,9 +136,9 @@ int main(void)
       rs232_send_string(strhumedad);
       rs232_send_string(strtemperatura);
       lcd_gotoxy(1, 1);
-      lcd_puts(strhumedad, strlen(strhumedad) );
+      lcd_puts(strhumedad, strlen(strhumedad) - 2 );
       lcd_gotoxy(1, 2);
-      lcd_puts(strtemperatura, strlen(strtemperatura) );
+      lcd_puts(strtemperatura, strlen(strtemperatura) - 2 );
 	  }
     rs232_send_string("blinking\r\n");
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
