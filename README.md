@@ -1,15 +1,18 @@
 # Proyecto STM32 - Lectura de DHT11
 
 Este proyecto implementa la lectura de un sensor **DHT11** (temperatura y humedad) utilizando un microcontrolador **STM32F411RT6**.  
-Los datos se envían por **UART (RS232)** y se muestra un parpadeo en el LED integrado como indicador de ejecución.
+Los valores obtenidos se visualizan en una **pantalla LCD** y, adicionalmente, se transmiten mediante **UART (RS232)**.  
+Como indicador de ejecución, el sistema activa un parpadeo en el **LED integrado** de la placa.
+
 
 ## Estructura del proyecto
 
-- `main.c` → Código principal de inicialización y bucle infinito.
-- `dht11.c / dht11.h` → Librería para la comunicación con el sensor DHT11.
-- `rs232.c / rs232.h` → Funciones para transmisión serial.
-- `output.c / output.h` → Funciones auxiliares de salida.
-- `usart.c / gpio.c` → Inicialización de periféricos generada por CubeMX.
+- [main.c](./main.c) → Código principal de inicialización y bucle infinito.
+- [dht11.c](./lib/src/dht11.c) / [dht11.h](./lib/inc/dht11.h) → Librería para la comunicación con el sensor DHT11.
+- [rs232.c](./lib/src/rs232.c) / [rs232.h](./lib/inc/rs232.h) → Funciones para transmisión serial.
+- [output.c](./lib/src/output.c) / [output.h](./lib/inc/output.h) → Funciones auxiliares de salida.
+- [usart.c](./lib/src/usart.c) / [gpio.c](./lib/src/gpio.c) → Inicialización de periféricos generada por CubeMX.
+- [lcd.c](./lib/src/lcd.c) / [lcd.h](./lib/inc/lcd.h) → Control e inicialización de la pantalla LCD.
 
 ## Configuración del hardware
 
@@ -17,6 +20,7 @@ Los datos se envían por **UART (RS232)** y se muestra un parpadeo en el LED int
 - **Sensor:** DHT11 conectado aL PIN C3 configurado como entrada/salida.
 - **UART:** USART2 a 9600 baudios.
 - **LED:** Pin PA5.
+- **LCD:** LCD Shield.
 
 ## Flujo del programa
 
@@ -25,6 +29,7 @@ Los datos se envían por **UART (RS232)** y se muestra un parpadeo en el LED int
 3. En el bucle principal:
    - Se ejecuta `dht11_read()`.
    - Si la lectura es correcta:
+     - Se muestra en la LCD humedad y temperatura.
      - Se envía por UART la humedad y temperatura.
    - Se envía un mensaje de estado `"blinking"`.
    - Se alterna el LED en PA5 cada 1.5 segundos.
@@ -37,11 +42,12 @@ blinking
 
 ## Dependencias
 
-- **HAL STM32CubeMX** para inicialización de periféricos.
+- **HAL STM32CubeMX** → Inicialización de periféricos.
 - Librerías personalizadas:
-  - `dht11.h`
-  - `rs232.h`
-  - `output.h`
+  - [dht11.h](./lib/inc/dht11.h) / [dht11.c](./lib/src/dht11.c)
+  - [rs232.h](./lib/inc/rs232.h) / [rs232.c](./lib/src/rs232.c)
+  - [output.h](./lib/inc/output.h) / [output.c](./lib/src/output.c)
+  - [lcd.h](./lib/inc/lcd.h) / [lcd.c](./lib/src/lcd.c)
 
 ## Compilación y carga
 
@@ -58,7 +64,7 @@ blinking
 
 ---
 
-Autor: Robert  
+Autor: ROMOBOA 
 Fecha: Septiembre 2026
 
 

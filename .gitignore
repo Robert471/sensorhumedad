@@ -5,7 +5,9 @@ build/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-*.cmake
+
+#no ignorar el cmake
+#*.cmake
 
 # Archivos de salida binarios
 *.elf
