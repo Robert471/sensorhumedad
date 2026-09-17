@@ -26,6 +26,7 @@
 #include "output.h"
 #include "rs232.h"
 #include "dht11.h"
+#include "lcd.h"
 #include "string.h"
 #include <stdio.h>
 /* USER CODE END Includes */
@@ -96,6 +97,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   output_init();
   rs232_init(9600);
+  lcd_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -115,15 +117,28 @@ int main(void)
 	// CONTADOR HABILITADO
 	TIM3->CR1 |= (1 << 0);	//	1: Counter enabled
 
+  //----------Iniciando lcd
+  lcd_gotoxy(1, 1);
+  lcd_puts("Hola Mundo", 10);
+
+  lcd_gotoxy(1, 2);
+  lcd_puts("Curso ARM", 9);
+
+
   while (1)
   {
     
     if( dht11_read() == 0 )
 	  {
+      lcd_clear();
 		  sprintf(strhumedad, "humd: %u \r\n", humedad);
 		  sprintf(strtemperatura, "temp: %u \r\n", temperatura);
       rs232_send_string(strhumedad);
       rs232_send_string(strtemperatura);
+      lcd_gotoxy(1, 1);
+      lcd_puts(strhumedad, strlen(strhumedad) );
+      lcd_gotoxy(1, 2);
+      lcd_puts(strtemperatura, strlen(strtemperatura) );
 	  }
     rs232_send_string("blinking\r\n");
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
